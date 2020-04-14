@@ -27,8 +27,21 @@ class SnakeMap {
     this.playArea2dContext.fillRect(0, 0, this.width, this.height);
   }
 
-  public drawSnake(snake: Snake): void {
+  public addSnakeTailStart(snake: Snake): void {
+    snake.moveSnake();
+
     this.playArea2dContext.fillStyle = snake.getColor;
+
+    this.playArea2dContext.fillRect(
+      snake.getTailHead.x,
+      snake.getTailHead.y,
+      snake.getBlockSize,
+      snake.getBlockSize
+    );
+  }
+
+  public removeSnakeTailEnd(snake: Snake): void {
+    this.playArea2dContext.fillStyle = this.color;
 
     this.playArea2dContext.fillRect(
       snake.getTail[0].x,
@@ -36,5 +49,7 @@ class SnakeMap {
       snake.getBlockSize,
       snake.getBlockSize
     );
+
+    snake.getTail.shift();
   }
 }
