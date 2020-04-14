@@ -22,4 +22,8 @@ class Snake {
   public get getTail(): Array<{ x: number; y: number }> {
     return this.tail;
   }
+
+  public get getTailHead(): { x: number; y: number } {
+    return this.tail[this.tail.length - 1];
+  }
 }

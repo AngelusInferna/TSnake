@@ -7,8 +7,13 @@ class SnakeGame {
     this.snakeMap = new SnakeMap(450, 450, "#8ab3ff");
   }
 
-  public StartGame(): void {
+  public startGame(): void {
     this.snakeMap.initializeMap();
-    this.snakeMap.drawSnake(this.snake);
+    this.executeIntervalAction();
+  }
+
+  public executeIntervalAction(): void {
+    this.snakeMap.addSnakeTailStart(this.snake);
+    this.snakeMap.removeSnakeTailEnd(this.snake);
   }
 }
