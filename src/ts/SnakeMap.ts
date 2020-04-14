@@ -26,4 +26,15 @@ class SnakeMap {
     this.playArea2dContext.fillStyle = this.color;
     this.playArea2dContext.fillRect(0, 0, this.width, this.height);
   }
+
+  public drawSnake(snake: Snake): void {
+    this.playArea2dContext.fillStyle = snake.getColor;
+
+    this.playArea2dContext.fillRect(
+      0,
+      0,
+      snake.getBlockSize,
+      snake.getBlockSize
+    );
+  }
 }
