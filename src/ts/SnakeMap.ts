@@ -31,8 +31,8 @@ class SnakeMap {
     this.playArea2dContext.fillStyle = snake.getColor;
 
     this.playArea2dContext.fillRect(
-      0,
-      0,
+      snake.getTail[0].x,
+      snake.getTail[0].y,
       snake.getBlockSize,
       snake.getBlockSize
     );
