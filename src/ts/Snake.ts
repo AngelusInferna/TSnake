@@ -3,6 +3,7 @@ class Snake {
   private color: string;
   private tail: Array<{ x: number; y: number }>;
   private currentDirection: Direction;
+  private maxTailLength: number = 10;
 
   constructor(blockSize: number, color: string) {
     this.blockSize = blockSize;
@@ -30,11 +31,34 @@ class Snake {
     return this.tail[this.tail.length - 1];
   }
 
-  public set setCurrentDirection(direction: Direction) {
-    this.currentDirection = direction;
+  public get getMaxTailLength(): number {
+    return this.maxTailLength;
   }
 
-  public moveSnake(): void {
+  public get getTailLength(): number {
+    return this.tail.length;
+  }
+
+  public set setCurrentDirection(direction: Direction) {
+    if (this.currentDirection == Direction.Up && direction == Direction.Down) {
+    } else if (
+      this.currentDirection == Direction.Down &&
+      direction == Direction.Up
+    ) {
+    } else if (
+      this.currentDirection == Direction.Left &&
+      direction == Direction.Right
+    ) {
+    } else if (
+      this.currentDirection == Direction.Right &&
+      direction == Direction.Left
+    ) {
+    } else {
+      this.currentDirection = direction;
+    }
+  }
+
+  public moveSnake(mapHeight: number, mapWidth: number): void {
     let tailHead: { x: number; y: number };
     let newX: number;
     let newY: number;
@@ -52,8 +76,19 @@ class Snake {
     } else if (this.currentDirection == Direction.Right) {
       newX = tailHead.x + this.blockSize;
     }
-    console.log({ x: newX, y: newY });
+
+    if (newX < 0) {
+      newX = mapWidth;
+    } else if (newX > mapWidth) {
+      newX = 0;
+    }
+
+    if (newY < 0) {
+      newY = mapHeight;
+    } else if (newY > mapHeight) {
+      newY = 0;
+    }
+
     this.tail.push({ x: newX, y: newY });
-    console.log(this.tail);
   }
 }
