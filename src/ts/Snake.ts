@@ -35,11 +35,13 @@ class Snake {
   }
 
   public moveSnake(): void {
-    let newX: number = 0;
-    let newY: number = 0;
     let tailHead: { x: number; y: number };
+    let newX: number;
+    let newY: number;
 
     tailHead = this.getTailHead;
+    newX = tailHead.x;
+    newY = tailHead.y;
 
     if (this.currentDirection == Direction.Up) {
       newY = tailHead.y - this.blockSize;
@@ -50,7 +52,8 @@ class Snake {
     } else if (this.currentDirection == Direction.Right) {
       newX = tailHead.x + this.blockSize;
     }
-
+    console.log({ x: newX, y: newY });
     this.tail.push({ x: newX, y: newY });
+    console.log(this.tail);
   }
 }
