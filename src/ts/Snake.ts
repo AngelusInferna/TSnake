@@ -3,6 +3,7 @@ class Snake {
   private color: string;
   private tail: Array<{ x: number; y: number }>;
   private currentDirection: Direction;
+  private maxTailLength: number = 10;
 
   constructor(blockSize: number, color: string) {
     this.blockSize = blockSize;
@@ -30,6 +31,14 @@ class Snake {
     return this.tail[this.tail.length - 1];
   }
 
+  public get getMaxTailLength(): number {
+    return this.maxTailLength;
+  }
+
+  public get getTailLength(): number {
+    return this.tail.length;
+  }
+
   public set setCurrentDirection(direction: Direction) {
     this.currentDirection = direction;
   }
@@ -52,8 +61,7 @@ class Snake {
     } else if (this.currentDirection == Direction.Right) {
       newX = tailHead.x + this.blockSize;
     }
-    console.log({ x: newX, y: newY });
+
     this.tail.push({ x: newX, y: newY });
-    console.log(this.tail);
   }
 }

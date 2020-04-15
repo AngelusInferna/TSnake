@@ -8,12 +8,9 @@ class SnakeGame {
     this.snake = new Snake(10, "#006118");
     this.snakeMap = new SnakeMap(450, 450, "#8ab3ff");
 
-    console.log("keybinding start");
-
     document.onkeydown = (e: KeyboardEvent) => {
       this.getKeyboardInput(e);
     };
-    console.log("keybinding end");
   }
 
   public startGame(): void {
@@ -21,14 +18,11 @@ class SnakeGame {
   }
 
   public executeIntervalAction(): void {
-    console.log(this.snake);
     this.snakeMap.addSnakeTailStart(this.snake);
     this.snakeMap.removeSnakeTailEnd(this.snake);
   }
 
   public getKeyboardInput(this: SnakeGame, e: KeyboardEvent): void {
-    console.log(e);
-
     switch (e.keyCode) {
       case Keys.Up:
         this.snake.setCurrentDirection = Direction.Up;
