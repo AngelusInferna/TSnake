@@ -40,7 +40,22 @@ class Snake {
   }
 
   public set setCurrentDirection(direction: Direction) {
-    this.currentDirection = direction;
+    if (this.currentDirection == Direction.Up && direction == Direction.Down) {
+    } else if (
+      this.currentDirection == Direction.Down &&
+      direction == Direction.Up
+    ) {
+    } else if (
+      this.currentDirection == Direction.Left &&
+      direction == Direction.Right
+    ) {
+    } else if (
+      this.currentDirection == Direction.Right &&
+      direction == Direction.Left
+    ) {
+    } else {
+      this.currentDirection = direction;
+    }
   }
 
   public moveSnake(mapHeight: number, mapWidth: number): void {
