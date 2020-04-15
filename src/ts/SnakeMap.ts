@@ -28,7 +28,7 @@ class SnakeMap {
   }
 
   public addSnakeTailStart(snake: Snake): void {
-    snake.moveSnake();
+    snake.moveSnake(this.height, this.width);
 
     this.playArea2dContext.fillStyle = snake.getColor;
 
