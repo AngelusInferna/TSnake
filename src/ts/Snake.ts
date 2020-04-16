@@ -3,7 +3,7 @@ class Snake {
   private color: string;
   private tail: Array<{ x: number; y: number }>;
   private currentDirection: Direction;
-  private maxTailLength: number = 10;
+  private maxTailLength: number = 20;
 
   constructor(blockSize: number, color: string) {
     this.blockSize = blockSize;
@@ -58,10 +58,10 @@ class Snake {
     }
   }
 
-  public moveSnake(mapHeight: number, mapWidth: number): void {
-    let tailHead: { x: number; y: number };
+  public moveSnake(snakeMap: SnakeMap): void {
     let newX: number;
     let newY: number;
+    let tailHead: { x: number; y: number };
 
     tailHead = this.getTailHead;
     newX = tailHead.x;
@@ -78,17 +78,21 @@ class Snake {
     }
 
     if (newX < 0) {
-      newX = mapWidth;
-    } else if (newX > mapWidth) {
+      newX = snakeMap.getWidth;
+    } else if (newX > snakeMap.getWidth) {
       newX = 0;
     }
 
     if (newY < 0) {
-      newY = mapHeight;
-    } else if (newY > mapHeight) {
+      newY = snakeMap.getHeight;
+    } else if (newY > snakeMap.getHeight) {
       newY = 0;
     }
 
     this.tail.push({ x: newX, y: newY });
+
+    if (this.maxTailLength < this.tail.length) {
+      this.tail.shift();
+    }
   }
 }
