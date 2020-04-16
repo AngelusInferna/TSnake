@@ -58,4 +58,10 @@ class SnakeMap {
       );
     }
   }
+
+  public resetMap() {
+    this.playArea2dContext.fillStyle = this.color;
+    this.playArea2dContext.clearRect(0, 0, this.width, this.height);
+    this.playArea2dContext.fillRect(0, 0, this.width, this.height);
+  }
 }
