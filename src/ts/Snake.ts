@@ -116,4 +116,10 @@ class Snake {
 
     return gameOver;
   }
+
+  public resetSnake() {
+    this.tail = new Array<{ x: number; y: number }>();
+    this.tail.push({ x: 0, y: 0 });
+    this.currentDirection = Direction.Right;
+  }
 }
