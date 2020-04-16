@@ -5,7 +5,7 @@ class SnakeMap {
   private playAreaCanvas: HTMLCanvasElement;
   private playArea2dContext: CanvasRenderingContext2D;
 
-  constructor(width: number, height: number, color: string) {
+  constructor(width: number, height: number, blockSize: number, color: string) {
     this.height = height;
     this.width = width;
     this.color = color;
@@ -19,6 +19,14 @@ class SnakeMap {
     );
   }
 
+  public get getHeight(): number {
+    return this.height;
+  }
+
+  public get getWidth(): number {
+    return this.width;
+  }
+
   public initializeMap() {
     this.playAreaCanvas.width = this.width;
     this.playAreaCanvas.height = this.height;
@@ -27,9 +35,7 @@ class SnakeMap {
     this.playArea2dContext.fillRect(0, 0, this.width, this.height);
   }
 
-  public addSnakeTailStart(snake: Snake): void {
-    snake.moveSnake(this.height, this.width);
-
+  public drawSnakeHead(snake: Snake): void {
     this.playArea2dContext.fillStyle = snake.getColor;
 
     this.playArea2dContext.fillRect(
@@ -40,8 +46,8 @@ class SnakeMap {
     );
   }
 
-  public removeSnakeTailEnd(snake: Snake): void {
-    if (snake.getMaxTailLength < snake.getTailLength) {
+  public removeSnakeEnd(snake: Snake): void {
+    if (snake.getMaxTailLength <= snake.getTailLength) {
       this.playArea2dContext.fillStyle = this.color;
 
       this.playArea2dContext.fillRect(
@@ -50,8 +56,6 @@ class SnakeMap {
         snake.getBlockSize,
         snake.getBlockSize
       );
-
-      snake.getTail.shift();
     }
   }
 }

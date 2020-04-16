@@ -2,24 +2,47 @@ class SnakeGame {
   private snake: Snake;
   private snakeMap: SnakeMap;
   private pause: boolean = true;
-  private snakeIntervalId: number = 0;
+  private snakeMovingIntervalId: number = 0;
 
   constructor() {
-    this.snake = new Snake(10, "#006118");
-    this.snakeMap = new SnakeMap(450, 450, "#8ab3ff");
+    let defaultBlockSize = 10;
+    let defaultMapWith = 450;
+    let defaultMapHeight = 450;
+
+    this.snake = new Snake(defaultBlockSize, "#006118");
+
+    this.snakeMap = new SnakeMap(
+      defaultMapWith,
+      defaultMapHeight,
+      defaultBlockSize,
+      "#8ab3ff"
+    );
+  }
+
+  public intializeGame() {
+    this.snakeMap.initializeMap();
 
     document.onkeydown = (e: KeyboardEvent) => {
       this.getKeyboardInput(e);
     };
   }
 
-  public startGame(): void {
-    this.snakeMap.initializeMap();
+  private executeIntervalAction(): void {
+    this.snakeMap.removeSnakeEnd(this.snake);
+    this.snakeMap.drawSnakeHead(this.snake);
+    this.snake.moveSnake(this.snakeMap);
   }
 
-  public executeIntervalAction(): void {
-    this.snakeMap.addSnakeTailStart(this.snake);
-    this.snakeMap.removeSnakeTailEnd(this.snake);
+  private startSnakeMoving(): void {
+    this.snakeMovingIntervalId = setInterval(() => {
+      this.executeIntervalAction();
+    }, 100);
+    this.pause = false;
+  }
+
+  private stopSnakeMoving(): void {
+    clearInterval(this.snakeMovingIntervalId);
+    this.pause = true;
   }
 
   public getKeyboardInput(this: SnakeGame, e: KeyboardEvent): void {
@@ -38,13 +61,9 @@ class SnakeGame {
         break;
       case Keys.Space:
         if (this.pause) {
-          this.snakeIntervalId = setInterval(() => {
-            this.executeIntervalAction();
-          }, 100);
-          this.pause = false;
+          this.startSnakeMoving();
         } else {
-          clearInterval(this.snakeIntervalId);
-          this.pause = true;
+          this.stopSnakeMoving();
         }
         break;
       default:
