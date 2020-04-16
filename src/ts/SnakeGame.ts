@@ -28,9 +28,15 @@ class SnakeGame {
   }
 
   private executeIntervalAction(): void {
+    let gameOver: boolean;
+    gameOver = this.snake.moveSnake(this.snakeMap);
+    if (gameOver == true) {
+      this.stopSnakeMoving();
+      return;
+    }
+
     this.snakeMap.removeSnakeEnd(this.snake);
     this.snakeMap.drawSnakeHead(this.snake);
-    this.snake.moveSnake(this.snakeMap);
   }
 
   private startSnakeMoving(): void {
