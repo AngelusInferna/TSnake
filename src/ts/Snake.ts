@@ -58,9 +58,22 @@ class Snake {
     }
   }
 
-  public moveSnake(snakeMap: SnakeMap): void {
+  public isSnakeTouchingItsOwnTail(head: { x: number; y: number }): boolean {
+    let match: boolean = false;
+
+    this.tail.forEach((tailPart) => {
+      if (tailPart.x == head.x && tailPart.y == head.y) {
+        match = true;
+      }
+    });
+
+    return match;
+  }
+
+  public moveSnake(snakeMap: SnakeMap): boolean {
     let newX: number;
     let newY: number;
+    let gameOver: boolean = false;
     let tailHead: { x: number; y: number };
 
     tailHead = this.getTailHead;
@@ -89,10 +102,18 @@ class Snake {
       newY = 0;
     }
 
-    this.tail.push({ x: newX, y: newY });
+    let newTailHead = { x: newX, y: newY };
+    if (this.isSnakeTouchingItsOwnTail(newTailHead)) {
+      gameOver = true;
+      return gameOver;
+    }
+
+    this.tail.push(newTailHead);
 
     if (this.maxTailLength < this.tail.length) {
       this.tail.shift();
     }
+
+    return gameOver;
   }
 }
