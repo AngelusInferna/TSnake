@@ -22,7 +22,7 @@ class SnakeGame {
 
   public intializeGame() {
     this.snakeMap.initializeMap();
-    this.snakeMap.createFood();
+    this.snakeMap.createFood(this.snake);
 
     document.onkeydown = (e: KeyboardEvent) => {
       this.getKeyboardInput(e);
@@ -40,7 +40,7 @@ class SnakeGame {
     if (this.snakeMap.isSnakeEatingFood(this.snake)) {
       this.points++;
       console.log(this.points);
-      this.snakeMap.createFood();
+      this.snakeMap.createFood(this.snake);
     }
 
     this.snakeMap.removeSnakeEnd(this.snake);
@@ -66,7 +66,7 @@ class SnakeGame {
     this.snake.resetSnake();
     this.snakeMap.resetMap();
     this.snakeMap.resetFood();
-    this.snakeMap.createFood();
+    this.snakeMap.createFood(this.snake);
     this.startSnakeMoving();
   }
 

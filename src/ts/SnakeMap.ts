@@ -65,9 +65,26 @@ class SnakeMap {
     }
   }
 
-  public createFood(): void {
+  public createFood(snake: Snake): void {
+    let newFoodPoint: {
+      x: number;
+      y: number;
+    };
+
+    let isSnakeOnFoodPoint: boolean = false;
+
     while (this.foods.length < this.maxPointCount) {
-      var newFoodPoint = this.GenerateRandomPointOnMap();
+      newFoodPoint = this.generateRandomPointOnMap();
+
+      isSnakeOnFoodPoint = snake.getTail.some(
+        (tailPart: { x: number; y: number }) =>
+          tailPart.x == newFoodPoint.x && tailPart.y == newFoodPoint.y
+      );
+
+      if (isSnakeOnFoodPoint) {
+        continue;
+      }
+
       this.foods.push(newFoodPoint);
 
       this.playArea2dContext.fillStyle = "#fc0307";
@@ -80,7 +97,7 @@ class SnakeMap {
     this.foods = new Array<{ x: number; y: number }>();
   }
 
-  public GenerateRandomPointOnMap(): { x: number; y: number } {
+  public generateRandomPointOnMap(): { x: number; y: number } {
     var pointX: number =
       (Math.floor(Math.random() * (this.width / this.blockSize)) + 1) * 10;
     var pointY: number =
