@@ -49,6 +49,10 @@ class SnakeGame {
     this.points++;
     this.snakeMap.createFood(this.snake);
     this.setScoreText(this.points);
+
+    if (this.points % 3 == 0) {
+      this.snake.increaseMaxTailLength();
+    }
   }
 
   private setScoreText(score: number): void {

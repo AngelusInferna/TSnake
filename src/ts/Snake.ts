@@ -3,7 +3,7 @@ class Snake {
   private color: string;
   private tail: Array<{ x: number; y: number }>;
   private currentDirection: Direction;
-  private maxTailLength: number = 20;
+  private maxTailLength: number = 8;
 
   constructor(blockSize: number, color: string) {
     this.blockSize = blockSize;
@@ -121,5 +121,10 @@ class Snake {
     this.tail = new Array<{ x: number; y: number }>();
     this.tail.push({ x: 0, y: 0 });
     this.currentDirection = Direction.Right;
+    this.maxTailLength = 8;
+  }
+
+  public increaseMaxTailLength(): void {
+    this.maxTailLength++;
   }
 }
