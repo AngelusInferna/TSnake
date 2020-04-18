@@ -38,13 +38,25 @@ class SnakeGame {
     }
 
     if (this.snakeMap.isSnakeEatingFood(this.snake)) {
-      this.points++;
-      console.log(this.points);
-      this.snakeMap.createFood(this.snake);
+      this.increasePoints();
     }
 
     this.snakeMap.removeSnakeEnd(this.snake);
     this.snakeMap.drawSnakeHead(this.snake);
+  }
+
+  private increasePoints() {
+    this.points++;
+    this.snakeMap.createFood(this.snake);
+    this.setScoreText(this.points);
+  }
+
+  private setScoreText(score: number): void {
+    let pointDiv: HTMLDivElement = <HTMLDivElement>(
+      document.getElementById("points")
+    );
+
+    pointDiv.innerText = "Punkte: " + score.toString();
   }
 
   private startSnakeMoving(): void {
@@ -67,6 +79,7 @@ class SnakeGame {
     this.snakeMap.resetMap();
     this.snakeMap.resetFood();
     this.snakeMap.createFood(this.snake);
+    this.setScoreText(0);
     this.startSnakeMoving();
   }
 
