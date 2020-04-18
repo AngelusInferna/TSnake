@@ -4,11 +4,17 @@ class SnakeMap {
   private color: string;
   private playAreaCanvas: HTMLCanvasElement;
   private playArea2dContext: CanvasRenderingContext2D;
+  private food: Array<{ x: number; y: number }>;
+  private maxPointCount: number;
+  private blockSize: number;
 
   constructor(width: number, height: number, blockSize: number, color: string) {
     this.height = height;
     this.width = width;
     this.color = color;
+    this.food = new Array<{ x: number; y: number }>();
+    this.maxPointCount = 5;
+    this.blockSize = blockSize;
 
     this.playAreaCanvas = <HTMLCanvasElement>(
       document.getElementById("playArea")
@@ -57,5 +63,25 @@ class SnakeMap {
         snake.getBlockSize
       );
     }
+  }
+
+  public createFood(): void {
+    while (this.food.length < this.maxPointCount) {
+      var newFoodPoint = this.GenerateRandomPointOnMap();
+      this.food.push(newFoodPoint);
+
+      this.playArea2dContext.fillStyle = "#fc0307";
+
+      this.playArea2dContext.fillRect(newFoodPoint.x, newFoodPoint.y, 10, 10);
+    }
+  }
+
+  public GenerateRandomPointOnMap(): { x: number; y: number } {
+    var pointX: number =
+      (Math.floor(Math.random() * (this.width / this.blockSize)) + 1) * 10;
+    var pointY: number =
+      (Math.floor(Math.random() * (this.height / this.blockSize)) + 1) * 10;
+
+    return { x: pointX, y: pointY };
   }
 }

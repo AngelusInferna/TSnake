@@ -6,8 +6,8 @@ class SnakeGame {
 
   constructor() {
     let defaultBlockSize = 10;
-    let defaultMapWith = 450;
-    let defaultMapHeight = 450;
+    let defaultMapWith = 300;
+    let defaultMapHeight = 300;
 
     this.snake = new Snake(defaultBlockSize, "#006118");
 
@@ -21,6 +21,7 @@ class SnakeGame {
 
   public intializeGame() {
     this.snakeMap.initializeMap();
+    this.snakeMap.createFood();
 
     document.onkeydown = (e: KeyboardEvent) => {
       this.getKeyboardInput(e);
