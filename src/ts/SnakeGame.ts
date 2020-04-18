@@ -3,6 +3,7 @@ class SnakeGame {
   private snakeMap: SnakeMap;
   private pause: boolean = true;
   private snakeMovingIntervalId: number = 0;
+  private points: number = 0;
 
   constructor() {
     let defaultBlockSize = 10;
@@ -36,6 +37,12 @@ class SnakeGame {
       return;
     }
 
+    if (this.snakeMap.isSnakeEatingFood(this.snake)) {
+      this.points++;
+      console.log(this.points);
+      this.snakeMap.createFood();
+    }
+
     this.snakeMap.removeSnakeEnd(this.snake);
     this.snakeMap.drawSnakeHead(this.snake);
   }
@@ -53,9 +60,13 @@ class SnakeGame {
   }
 
   private restartGame(): void {
+    this.points = 0;
+
     this.stopSnakeMoving();
     this.snake.resetSnake();
     this.snakeMap.resetMap();
+    this.snakeMap.resetFood();
+    this.snakeMap.createFood();
     this.startSnakeMoving();
   }
 
