@@ -52,6 +52,13 @@ class SnakeGame {
     this.pause = true;
   }
 
+  private restartGame(): void {
+    this.stopSnakeMoving();
+    this.snake.resetSnake();
+    this.snakeMap.resetMap();
+    this.startSnakeMoving();
+  }
+
   public getKeyboardInput(this: SnakeGame, e: KeyboardEvent): void {
     switch (e.keyCode) {
       case Keys.Up:
@@ -72,6 +79,9 @@ class SnakeGame {
         } else {
           this.stopSnakeMoving();
         }
+        break;
+      case Keys.R:
+        this.restartGame();
         break;
       default:
         break;
