@@ -4,7 +4,7 @@ class SnakeMap {
   private color: string;
   private playAreaCanvas: HTMLCanvasElement;
   private playArea2dContext: CanvasRenderingContext2D;
-  private food: Array<{ x: number; y: number }>;
+  private foods: Array<{ x: number; y: number }>;
   private maxPointCount: number;
   private blockSize: number;
 
@@ -12,7 +12,7 @@ class SnakeMap {
     this.height = height;
     this.width = width;
     this.color = color;
-    this.food = new Array<{ x: number; y: number }>();
+    this.foods = new Array<{ x: number; y: number }>();
     this.maxPointCount = 5;
     this.blockSize = blockSize;
 
@@ -66,14 +66,18 @@ class SnakeMap {
   }
 
   public createFood(): void {
-    while (this.food.length < this.maxPointCount) {
+    while (this.foods.length < this.maxPointCount) {
       var newFoodPoint = this.GenerateRandomPointOnMap();
-      this.food.push(newFoodPoint);
+      this.foods.push(newFoodPoint);
 
       this.playArea2dContext.fillStyle = "#fc0307";
 
       this.playArea2dContext.fillRect(newFoodPoint.x, newFoodPoint.y, 10, 10);
     }
+  }
+
+  public resetFood(): void {
+    this.foods = new Array<{ x: number; y: number }>();
   }
 
   public GenerateRandomPointOnMap(): { x: number; y: number } {
@@ -89,5 +93,24 @@ class SnakeMap {
     this.playArea2dContext.fillStyle = this.color;
     this.playArea2dContext.clearRect(0, 0, this.width, this.height);
     this.playArea2dContext.fillRect(0, 0, this.width, this.height);
+  }
+
+  public isSnakeEatingFood(snake: Snake): boolean {
+    let snakeHead: { x: number; y: number } = snake.getTailHead;
+    let index: number;
+
+    let matchingFood = this.foods.filter(
+      (food) => food.x == snakeHead.x && food.y == snakeHead.y
+    );
+
+    if (matchingFood != undefined) {
+      index = this.foods.indexOf(matchingFood[0]);
+      if (index != -1) {
+        this.foods.splice(index, 1);
+        return true;
+      }
+    }
+
+    return false;
   }
 }
