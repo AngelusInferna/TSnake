@@ -91,14 +91,14 @@ class Snake {
     }
 
     if (newX < 0) {
-      newX = snakeMap.getWidth;
-    } else if (newX > snakeMap.getWidth) {
+      newX = snakeMap.getWidth - this.blockSize;
+    } else if (newX >= snakeMap.getWidth) {
       newX = 0;
     }
 
     if (newY < 0) {
-      newY = snakeMap.getHeight;
-    } else if (newY > snakeMap.getHeight) {
+      newY = snakeMap.getHeight - this.blockSize;
+    } else if (newY >= snakeMap.getHeight) {
       newY = 0;
     }
 

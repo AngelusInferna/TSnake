@@ -76,12 +76,23 @@ class SnakeMap {
     while (this.foods.length < this.maxPointCount) {
       newFoodPoint = this.generateRandomPointOnMap();
 
-      isSnakeOnFoodPoint = snake.getTail.some(
-        (tailPart: { x: number; y: number }) =>
-          tailPart.x == newFoodPoint.x && tailPart.y == newFoodPoint.y
-      );
+      if (newFoodPoint.x < 0) {
+        newFoodPoint.x = this.getWidth - this.blockSize;
+      } else if (newFoodPoint.x >= this.getWidth) {
+        newFoodPoint.x = 0;
+      }
 
-      if (isSnakeOnFoodPoint) {
+      if (newFoodPoint.y < 0) {
+        newFoodPoint.y = this.getHeight - this.blockSize;
+      } else if (newFoodPoint.y >= this.getHeight) {
+        newFoodPoint.y = 0;
+      }
+
+      if (this.isAnyFoodPointOnPosition(newFoodPoint)) {
+        continue;
+      }
+
+      if (this.isAnyFoodPointOnSnake(newFoodPoint, snake)) {
         continue;
       }
 
@@ -129,5 +140,21 @@ class SnakeMap {
     }
 
     return false;
+  }
+
+  public isAnyFoodPointOnPosition(position: { x: number; y: number }) {
+    return this.foods.some(
+      (food) => food.x == position.x && food.y == position.y
+    );
+  }
+
+  public isAnyFoodPointOnSnake(
+    foodPoint: { x: number; y: number },
+    snake: Snake
+  ) {
+    return snake.getTail.some(
+      (tailPart: { x: number; y: number }) =>
+        tailPart.x == foodPoint.x && tailPart.y == foodPoint.y
+    );
   }
 }
