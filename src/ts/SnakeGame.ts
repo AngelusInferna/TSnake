@@ -3,8 +3,9 @@ class SnakeGame {
   private snakeMap: SnakeMap;
   private pause: boolean = true;
   private snakeMovingIntervalId: number = 0;
-  private points: number = 0;
+  private score: number = 0;
   private snakeMovingInterval: number = 100;
+  private level: number = 1;
 
   constructor() {
     let defaultBlockSize = 10;
@@ -39,25 +40,39 @@ class SnakeGame {
     }
 
     if (this.snakeMap.isSnakeEatingFood(this.snake)) {
-      this.increasePoints();
+      this.increaseScore();
     }
 
     this.snakeMap.removeSnakeEnd(this.snake);
     this.snakeMap.drawSnakeHead(this.snake);
   }
 
-  private increasePoints() {
-    this.points++;
+  private increaseScore() {
+    this.score++;
     this.snakeMap.createFood(this.snake);
-    this.setScoreText(this.points);
+    this.setScoreText();
 
-    if (this.points % 3 == 0) {
+    if (this.score % 3 == 0) {
       this.snake.increaseMaxTailLength();
     }
 
-    if (this.points % 5 == 0) {
+    if (this.score % 5 == 0) {
       this.increaseMovingInterval();
+      this.increaseLevel();
     }
+  }
+
+  private increaseLevel() {
+    this.level++;
+    this.setLevelText();
+  }
+
+  private setLevelText() {
+    let levelDiv: HTMLDivElement = <HTMLDivElement>(
+      document.getElementById("level")
+    );
+
+    levelDiv.innerText = `Level: + ${this.level.toString()}`;
   }
 
   private increaseMovingInterval() {
@@ -74,17 +89,15 @@ class SnakeGame {
 
     let movingSpeed: number = 100 - this.snakeMovingInterval;
 
-    speedDiv.innerText = "Geschwindigkeit: " + movingSpeed.toString();
-
-    console.log(movingSpeed);
+    speedDiv.innerText = `Geschwindigkeit: ${movingSpeed.toString()}`;
   }
 
-  private setScoreText(score: number): void {
+  private setScoreText(): void {
     let pointDiv: HTMLDivElement = <HTMLDivElement>(
       document.getElementById("points")
     );
 
-    pointDiv.innerText = "Punkte: " + score.toString();
+    pointDiv.innerText = `Punkte: ${this.score.toString()}`;
   }
 
   private startSnakeMoving(): void {
@@ -100,7 +113,8 @@ class SnakeGame {
   }
 
   private restartGame(): void {
-    this.points = 0;
+    this.level = 1;
+    this.score = 0;
     this.snakeMovingInterval = 100;
 
     this.stopSnakeMoving();
@@ -109,7 +123,7 @@ class SnakeGame {
     this.snakeMap.resetMap();
     this.snakeMap.resetFood();
     this.snakeMap.createFood(this.snake);
-    this.setScoreText(0);
+    this.setScoreText();
     this.startSnakeMoving();
   }
 
