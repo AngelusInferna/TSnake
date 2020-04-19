@@ -4,6 +4,7 @@ class SnakeGame {
   private pause: boolean = true;
   private snakeMovingIntervalId: number = 0;
   private points: number = 0;
+  private snakeMovingInterval: number = 100;
 
   constructor() {
     let defaultBlockSize = 10;
@@ -53,6 +54,29 @@ class SnakeGame {
     if (this.points % 3 == 0) {
       this.snake.increaseMaxTailLength();
     }
+
+    if (this.points % 5 == 0) {
+      this.increaseMovingInterval();
+    }
+  }
+
+  private increaseMovingInterval() {
+    this.stopSnakeMoving();
+    this.snakeMovingInterval = Math.floor(this.snakeMovingInterval * 0.9);
+    this.setSpeedText(this.snakeMovingInterval);
+    this.startSnakeMoving();
+  }
+
+  private setSpeedText(speed: number): void {
+    let speedDiv: HTMLDivElement = <HTMLDivElement>(
+      document.getElementById("speed")
+    );
+
+    let movingSpeed: number = 100 - this.snakeMovingInterval;
+
+    speedDiv.innerText = "Geschwindigkeit: " + movingSpeed.toString();
+
+    console.log(movingSpeed);
   }
 
   private setScoreText(score: number): void {
@@ -66,7 +90,7 @@ class SnakeGame {
   private startSnakeMoving(): void {
     this.snakeMovingIntervalId = setInterval(() => {
       this.executeIntervalAction();
-    }, 100);
+    }, this.snakeMovingInterval);
     this.pause = false;
   }
 
@@ -77,8 +101,10 @@ class SnakeGame {
 
   private restartGame(): void {
     this.points = 0;
+    this.snakeMovingInterval = 100;
 
     this.stopSnakeMoving();
+    this.setSpeedText(this.snakeMovingInterval);
     this.snake.resetSnake();
     this.snakeMap.resetMap();
     this.snakeMap.resetFood();
